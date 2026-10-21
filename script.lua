@@ -1,5 +1,5 @@
 -- ============================================================
--- YUSUF BABAPİRO | RAYFIELD KEY SYSTEM EDITION
+-- YUSUF BABAPİRO | KEY SYSTEM EDITION
 -- Developer: Onur & Yusuf
 -- ============================================================
 
@@ -10,25 +10,22 @@ local Window = Rayfield:CreateWindow({
    LoadingTitle = "Bekleyiniz Hilemiz açılıyor Developer:Onur",
    LoadingSubtitle = "by: Yusuf & Onur",
    ConfigurationSaving = {
-      Enabled = true,
-      FolderName = "YusufBabapiroConfig",
-      FileName = "RayfieldConfig"
+      Enabled = false
    },
    Discord = {
       Enabled = true,
-      Invite = "FDnMjx6RQ", -- Discord Davet Kodu (https://discord.gg/FDnMjx6RQ)
+      Invite = "FDnMjx6RQ",
       RememberJoins = false
    },
-   -- 🔑 KEY SİSTEMİ AYARLARI
    KeySystem = true,
    KeySettings = {
       Title = "🔑 YUSUF BABAPİRO | Key Sistemi",
       Subtitle = "Discord'dan key alabilirsiniz",
-      Note = "Key almak için Discord sunucumuza katılabilirsiniz: https://discord.gg/FDnMjx6RQ",
-      FileName = "YusufBabapiroKey",
-      SaveKey = true,
+      Note = "Key almak için Discord: https://discord.gg/FDnMjx6RQ",
+      FileName = "YusufKey",
+      SaveKey = false,
       GrabKeyFromSite = false,
-      Key = {"onurveyusufhilesinehoşgeldiniz!?"} -- Doğru Şifre
+      Key = {"onurveyusufhilesinehoşgeldiniz!?", "onurveyusufhilesinehosgeldiniz!?"}
    }
 })
 
@@ -41,17 +38,19 @@ local Camera = workspace.CurrentCamera
 -- Ses Efekti
 local SoundService = game:GetService("SoundService")
 local function PlayClickSound()
-    local sound = Instance.new("Sound")
-    sound.SoundId = "rbxassetid://6895079853"
-    sound.Volume = 0.5
-    sound.Parent = SoundService
-    sound:Play()
-    sound.Ended:Connect(function()
-        sound:Destroy()
+    pcall(function()
+        local sound = Instance.new("Sound")
+        sound.SoundId = "rbxassetid://6895079853"
+        sound.Volume = 0.5
+        sound.Parent = SoundService
+        sound:Play()
+        sound.Ended:Connect(function()
+            sound:Destroy()
+        end)
     end)
 end
 
--- Key Doğrulandığında Görünecek Bildirim
+-- Key Doğrulandığında Çıkacak Bildirim
 Rayfield:Notify({
    Title = "Giriş Başarılı!",
    Content = "Bekleyiniz Hilemiz açılıyor Developer:Onur",
@@ -234,5 +233,19 @@ PlayerTab:CreateToggle({
       if Spectating and targetPlr and targetPlr.Character and targetPlr.Character:FindFirstChild("Humanoid") then
          Camera.CameraSubject = targetPlr.Character.Humanoid
       else
-         if LocalPlayer.Character and LocalPlayer.Character:FindFirstChild("Humanoid")
-                    
+         if LocalPlayer.Character and LocalPlayer.Character:FindFirstChild("Humanoid") then
+            Camera.CameraSubject = LocalPlayer.Character.Humanoid
+         end
+      end
+   end,
+})
+
+PlayerTab:CreateButton({
+   Name = "🌀 Oyuncunun Yanına Işınlan (TP)",
+   Callback = function()
+      PlayClickSound()
+      local targetPlr = Players:FindFirstChild(TargetSpectate)
+      if targetPlr and targetPlr.Character and targetPlr.Character:FindFirstChild("HumanoidRootPart") then
+         if LocalPlayer.Character and LocalPlayer.Character:FindFirstChild("HumanoidRootPart") then
+            LocalPlayer.Character.HumanoidRootPart.CFrame = targetPlr.Character.
+               
