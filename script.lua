@@ -1,111 +1,25 @@
 -- ============================================================
--- YUSUF BABAPİRO | KEY SYSTEM EDITION
--- Developer: Onur & Yusuf
+-- YUSUF BABAPİRO | BROOKHAVEN & GELİŞMİŞ PLAYER EKLENTİSİ
 -- ============================================================
 
-local Rayfield = loadstring(game:HttpGet('https://sirius.menu/rayfield'))()
-
-local Window = Rayfield:CreateWindow({
-   Name = "🚀 YUSUF BABAPİRO | Special Edition",
-   LoadingTitle = "Bekleyiniz Hilemiz açılıyor Developer:Onur",
-   LoadingSubtitle = "by: Yusuf & Onur",
-   ConfigurationSaving = {
-      Enabled = false
-   },
-   Discord = {
-      Enabled = true,
-      Invite = "FDnMjx6RQ",
-      RememberJoins = false
-   },
-   KeySystem = true,
-   KeySettings = {
-      Title = "🔑 YUSUF BABAPİRO | Key Sistemi",
-      Subtitle = "Discord'dan key alabilirsiniz",
-      Note = "Key almak için Discord: https://discord.gg/FDnMjx6RQ",
-      FileName = "YusufKey",
-      SaveKey = false,
-      GrabKeyFromSite = false,
-      Key = {"onurveyusufhilesinehoşgeldiniz!?", "onurveyusufhilesinehosgeldiniz!?"}
-   }
-})
-
-local Players = game:GetService("Players")
-local RunService = game:GetService("RunService")
-local ReplicatedStorage = game:GetService("ReplicatedStorage")
-local LocalPlayer = Players.LocalPlayer
-local Camera = workspace.CurrentCamera
-
--- Ses Efekti
-local SoundService = game:GetService("SoundService")
-local function PlayClickSound()
-    pcall(function()
-        local sound = Instance.new("Sound")
-        sound.SoundId = "rbxassetid://6895079853"
-        sound.Volume = 0.5
-        sound.Parent = SoundService
-        sound:Play()
-        sound.Ended:Connect(function()
-            sound:Destroy()
-        end)
-    end)
-end
-
--- Key Doğrulandığında Çıkacak Bildirim
+-- Kırmızı & Beyaz Temalı Bildirim
 Rayfield:Notify({
-   Title = "Giriş Başarılı!",
-   Content = "Bekleyiniz Hilemiz açılıyor Developer:Onur",
-   Duration = 5,
+   Title = "🔴⚪ YUSUF BABAPİRO V3",
+   Content = "Brookhaven & Gelişmiş Oyuncu Modülleri Yüklendi!",
+   Duration = 4,
    Image = 4483362458,
 })
 
--- ============================================================
--- 🏡 BROOKHAVEN TAB
--- ============================================================
+-- 🏡 BROOKHAVEN SEKMESİ
 local BrookhavenTab = Window:CreateTab("🏡 Brookhaven", 4483362458)
 
-BrookhavenTab:CreateSection("🔴⚪ RGB İsim & Kıyafet Kopyalama")
+BrookhavenTab:CreateSection("🔴⚪ Avatar & RGB Özellikleri")
 
-local RGBNameEnabled = false
-local RGBLoop = nil
-
-BrookhavenTab:CreateToggle({
-   Name = "🌈 Brookhaven RGB İsim (Rengarenk)",
-   CurrentValue = false,
-   Flag = "RGBNameFlag",
-   Callback = function(Value)
-      PlayClickSound()
-      RGBNameEnabled = Value
-      
-      if RGBNameEnabled then
-         RGBLoop = task.spawn(function()
-            local hue = 0
-            while RGBNameEnabled do
-               hue = (hue + 0.02) % 1
-               local color = Color3.fromHSV(hue, 1, 1)
-               local hexColor = color:ToHex()
-               local colorTag = '<font color="#' .. hexColor .. '">🔴⚪ YUSUF BABAPİRO</font>'
-               
-               pcall(function()
-                  local args = {
-                     [1] = "RPName",
-                     [2] = colorTag
-                  }
-                  ReplicatedStorage:FindFirstChild("RE"):FindFirstChild("1RPName1Color"):FireServer(unpack(args))
-               end)
-               
-               task.wait(0.1)
-            end
-         end)
-      else
-         if RGBLoop then task.cancel(RGBLoop) end
-      end
-   end,
-})
-
+-- 1. Avatar Kopyalama (Outfit Stealer)
 local TargetOutfitUser = ""
 
 BrookhavenTab:CreateInput({
-   Name = "👤 Kıyafeti Kopyalanacak Oyuncu",
+   Name = "👤 Hedef Oyuncu Adı",
    PlaceholderText = "Kullanıcı adı yazın...",
    RemoveTextOnFocus = false,
    Callback = function(Text)
@@ -114,33 +28,29 @@ BrookhavenTab:CreateInput({
 })
 
 BrookhavenTab:CreateButton({
-   Name = "🎭 Brookhaven Kıyafetlerini Kopyala",
+   Name = "🎭 Avatarı Kopyala",
    Callback = function()
       PlayClickSound()
       local targetPlr = Players:FindFirstChild(TargetOutfitUser)
       if targetPlr and targetPlr.Character and LocalPlayer.Character then
-         local myChar = LocalPlayer.Character
+         local localChar = LocalPlayer.Character
          local targetChar = targetPlr.Character
          
-         for _, v in pairs(targetChar:GetChildren()) do
-            if v:IsA("Shirt") or v:IsA("Pants") or v:IsA("ShirtGraphic") then
-               for _, old in pairs(myChar:GetChildren()) do
-                  if old:IsA(v.ClassName) then
-                     old:Destroy()
-                  end
-               end
-               v:Clone().Parent = myChar
-            end
+         -- Kıyafet ve Aksesuarları Kopyala
+         local humanoid = localChar:FindFirstChildOfClass("Humanoid")
+         if humanoid then
+            local description = Players:GetHumanoidDescriptionFromUserId(targetPlr.UserId)
+            humanoid:ApplyDescription(description)
          end
          
          Rayfield:Notify({
-            Title = "Kıyafet Kopyalandı!",
-            Content = targetPlr.Name .. " adlı oyuncunun kıyafetleri giyildi.",
+            Title = "YUSUF BABAPİRO",
+            Content = targetPlr.Name .. " isimli oyuncunun avatarı kopyalandı!",
             Duration = 3,
          })
       else
          Rayfield:Notify({
-            Title = "Hata",
+            Title = "Hata!",
             Content = "Oyuncu bulunamadı!",
             Duration = 3,
          })
@@ -148,49 +58,74 @@ BrookhavenTab:CreateButton({
    end,
 })
 
--- ============================================================
--- 🚀 FLY V3 & OYUNCU TAB
--- ============================================================
-local PlayerTab = Window:CreateTab("🚀 Fly V3 & Oyuncu", 4483362458)
+-- 2. RGB İsim Yapma
+local RGBNameEnabled = false
+
+BrookhavenTab:CreateToggle({
+   Name = "🌈 RGB İsim (Rengarenk)",
+   CurrentValue = false,
+   Flag = "RGBNameFlag",
+   Callback = function(Value)
+      PlayClickSound()
+      RGBNameEnabled = Value
+      
+      task.spawn(function()
+         local hue = 0
+         while RGBNameEnabled do
+            hue = (hue + 0.01) % 1
+            local rgbColor = Color3.fromHSV(hue, 1, 1)
+            
+            local char = LocalPlayer.Character
+            if char and char:FindFirstChild("Humanoid") then
+               -- Oyuncu NameTag/Display ayarı
+               char.Humanoid.DisplayName = "🔴⚪ [YUSUF BABAPİRO] " .. LocalPlayer.Name
+            end
+            task.wait(0.05)
+         end
+      end)
+   end,
+})
+
+-- 🚀 FLY V3 & OYUNCU İZLEME SEKMESİ
+local PlayerTab = Window:CreateTab("👥 Oyuncu & Fly V3", 4483362458)
 
 PlayerTab:CreateSection("🛸 Fly V3 (Gelişmiş Uçuş)")
 
-local FlyV3Active = false
-local FlySpeed = 70
+local FlyV3Enabled = false
+local FlyV3Speed = 70
 
 PlayerTab:CreateToggle({
-   Name = "🛸 Fly V3 Aç / Kapat",
+   Name = "🔴 Fly V3 (Yumuşak & Hızlı Uçuş)",
    CurrentValue = false,
    Flag = "FlyV3Flag",
    Callback = function(Value)
       PlayClickSound()
-      FlyV3Active = Value
+      FlyV3Enabled = Value
       local char = LocalPlayer.Character
       if not char or not char:FindFirstChild("HumanoidRootPart") then return end
-      local hrp = char.HumanoidRootPart
       
-      if FlyV3Active then
+      if FlyV3Enabled then
+         local hrp = char.HumanoidRootPart
          local bg = Instance.new("BodyGyro", hrp)
-         bg.Name = "YusufFlyBG"
+         local bv = Instance.new("BodyVelocity", hrp)
+         bg.Name = "FlyV3BG"
+         bv.Name = "FlyV3BV"
          bg.P = 9e4
          bg.maxTorque = Vector3.new(9e9, 9e9, 9e9)
-         
-         local bv = Instance.new("BodyVelocity", hrp)
-         bv.Name = "YusufFlyBV"
          bv.maxForce = Vector3.new(9e9, 9e9, 9e9)
          
          task.spawn(function()
-            while FlyV3Active and char and char:FindFirstChild("HumanoidRootPart") do
+            while FlyV3Enabled and char and char:FindFirstChild("HumanoidRootPart") do
                bg.cframe = Camera.CFrame
-               bv.velocity = Camera.CFrame.LookVector * FlySpeed
+               bv.velocity = Camera.CFrame.LookVector * FlyV3Speed
                RunService.RenderStepped:Wait()
             end
-            if hrp:FindFirstChild("YusufFlyBG") then hrp.YusufFlyBG:Destroy() end
-            if hrp:FindFirstChild("YusufFlyBV") then hrp.YusufFlyBV:Destroy() end
+            if hrp:FindFirstChild("FlyV3BG") then hrp.FlyV3BG:Destroy() end
+            if hrp:FindFirstChild("FlyV3BV") then hrp.FlyV3BV:Destroy() end
          end)
       else
-         if hrp:FindFirstChild("YusufFlyBG") then hrp.YusufFlyBG:Destroy() end
-         if hrp:FindFirstChild("YusufFlyBV") then hrp.YusufFlyBV:Destroy() end
+         if char.HumanoidRootPart:FindFirstChild("FlyV3BG") then char.HumanoidRootPart.FlyV3BG:Destroy() end
+         if char.HumanoidRootPart:FindFirstChild("FlyV3BV") then char.HumanoidRootPart.FlyV3BV:Destroy() end
       end
    end,
 })
@@ -203,32 +138,49 @@ PlayerTab:CreateSlider({
    CurrentValue = 70,
    Flag = "FlyV3SpeedFlag",
    Callback = function(Value)
-      FlySpeed = Value
+      FlyV3Speed = Value
    end,
 })
 
-PlayerTab:CreateSection("👁️ Oyuncu İzleme & TP")
+PlayerTab:CreateSection("👁️ Oyuncu İzleme & Işınlanma")
 
-local TargetSpectate = ""
-
-PlayerTab:CreateInput({
-   Name = "👥 Hedef Oyuncu Adı",
-   PlaceholderText = "Kullanıcı adı...",
-   RemoveTextOnFocus = false,
-   Callback = function(Text)
-      TargetSpectate = Text
-   end,
-})
-
+local SelectedPlayerName = ""
 local Spectating = false
+
+-- Sunucudaki oyuncuların listesi
+local function GetPlayerList()
+   local list = {}
+   for _, p in pairs(Players:GetPlayers()) do
+      if p ~= LocalPlayer then
+         table.insert(list, p.Name)
+      end
+   end
+   return list
+end
+
+local PlayerDropdown = PlayerTab:CreateDropdown({
+   Name = "👤 Oyuncu Seç",
+   Options = GetPlayerList(),
+   CurrentOption = "",
+   Flag = "PlayerSelectFlag",
+   Callback = function(Option)
+      if type(Option) == "table" then
+         SelectedPlayerName = Option[1]
+      else
+         SelectedPlayerName = Option
+      end
+   end,
+})
+
+-- Oyuncunun ekranından izleme (Spectate)
 PlayerTab:CreateToggle({
-   Name = "📹 Oyuncunun Ekranından İzle (Spectate)",
+   Name = "📹 Oyuncuyu Ekranından İzle (Spectate)",
    CurrentValue = false,
    Flag = "SpectateFlag",
    Callback = function(Value)
       PlayClickSound()
       Spectating = Value
-      local targetPlr = Players:FindFirstChild(TargetSpectate)
+      local targetPlr = Players:FindFirstChild(SelectedPlayerName)
       
       if Spectating and targetPlr and targetPlr.Character and targetPlr.Character:FindFirstChild("Humanoid") then
          Camera.CameraSubject = targetPlr.Character.Humanoid
@@ -240,12 +192,21 @@ PlayerTab:CreateToggle({
    end,
 })
 
+-- Seçilen Oyuncuya Işınlanma (TP)
 PlayerTab:CreateButton({
-   Name = "🌀 Oyuncunun Yanına Işınlan (TP)",
+   Name = "🌀 Seçilen Oyuncuya Işınlan (TP)",
    Callback = function()
       PlayClickSound()
-      local targetPlr = Players:FindFirstChild(TargetSpectate)
+      local targetPlr = Players:FindFirstChild(SelectedPlayerName)
       if targetPlr and targetPlr.Character and targetPlr.Character:FindFirstChild("HumanoidRootPart") then
          if LocalPlayer.Character and LocalPlayer.Character:FindFirstChild("HumanoidRootPart") then
-            LocalPlayer.Character.HumanoidRootPart.CFrame = targetPlr.Character.
-               
+            LocalPlayer.Character.HumanoidRootPart.CFrame = targetPlr.Character.HumanoidRootPart.CFrame * CFrame.new(0, 0, -3)
+            Rayfield:Notify({
+               Title = "Işınlanma Başarılı!",
+               Content = targetPlr.Name .. " yanına ışınlandın.",
+               Duration = 3,
+            })
+         end
+      end
+   end,
+})
